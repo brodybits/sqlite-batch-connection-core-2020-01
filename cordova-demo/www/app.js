@@ -92,6 +92,7 @@ function batchDemo (connectionId) {
     connectionId,
     [
       ['SELECT ?, -?, LOWER(?), UPPER(?)', [null, 123.456789, 'ABC', 'Text']],
+      ['SELECT 10 * ?, -?', [1234567.890123, 1234567890123]],
       ['SLCT 1', []],
       ['SELECT ?', ['OK', 'out of bounds parameter']],
       ['DROP TABLE IF EXISTS Testing', []],

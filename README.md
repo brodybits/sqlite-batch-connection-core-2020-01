@@ -428,6 +428,11 @@ first set in JSON string format (reformatted by `prettier-standard`):
     "columns": ["?", "-?", "LOWER(?)", "UPPER(?)"],
     "rows": [[null, -123.456789, "abc", "TEXT"]]
   },
+  {
+    "status": 0,
+    "columns": ["10 * ?", "-?"],
+    "rows": [[12345678.90123, -1234567890123]]
+  },
   { "status": 1, "message": "near \"SLCT\": syntax error" },
   { "status": 1, "message": "column index out of range" },
   { "status": 0, "total_changes": 0, "last_insert_rowid": 0 },

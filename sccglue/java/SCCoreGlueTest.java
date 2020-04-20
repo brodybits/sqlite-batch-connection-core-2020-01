@@ -240,7 +240,7 @@ class SCCoreGlueTest {
 
     assertEquals(0, // SQLite OK
       SCCoreGlue.scc_begin_statement(connection,
-        "SELECT UPPER(?), LOWER(?), ?, -?, (10 * ?)"
+        "SELECT UPPER(?), LOWER(?), ?, (10 * ?), -?"
         )
       );
 
@@ -257,11 +257,11 @@ class SCCoreGlueTest {
       );
 
     assertEquals(0, // SQLite OK
-      SCCoreGlue.scc_bind_double(connection, 4, 12.34)
+      SCCoreGlue.scc_bind_double(connection, 4, 1234567.890123)
       );
 
     assertEquals(0, // SQLite OK
-      SCCoreGlue.scc_bind_long(connection, 5, 5678)
+      SCCoreGlue.scc_bind_long(connection, 5, 1234567890123L)
       );
 
     assertEquals(100, // SQLite rows
@@ -300,28 +300,28 @@ class SCCoreGlueTest {
     assertTrue(columnText3.equals(""));
 
     final String columnName4 = SCCoreGlue.scc_get_column_name(connection, 3);
-    assertTrue(columnName4.equals("-?"));
+    assertTrue(columnName4.equals("(10 * ?)"));
 
     final int columnType4 = SCCoreGlue.scc_get_column_type(connection, 3);
     assertTrue(columnType4 == SCCoreGlue.SCC_COLUMN_TYPE_FLOAT);
 
     final String columnText4 = SCCoreGlue.scc_get_column_text(connection, 3);
-    assertTrue(columnText4.equals("-12.34"));
+    assertTrue(columnText4.equals("12345678.90123"));
 
     final double columnValue4 = SCCoreGlue.scc_get_column_double(connection, 3);
-    assertTrue(columnValue4 == -12.34);
+    assertTrue(columnValue4 == 12345678.90123);
 
     final String columnName5 = SCCoreGlue.scc_get_column_name(connection, 4);
-    assertTrue(columnName5.equals("(10 * ?)"));
+    assertTrue(columnName5.equals("-?"));
 
     final int columnType5 = SCCoreGlue.scc_get_column_type(connection, 4);
     assertTrue(columnType5 == SCCoreGlue.SCC_COLUMN_TYPE_INTEGER);
 
     final String columnText5 = SCCoreGlue.scc_get_column_text(connection, 4);
-    assertTrue(columnText5.equals("56780"));
+    assertTrue(columnText5.equals("-1234567890123"));
 
     final long columnValue5 = SCCoreGlue.scc_get_column_long(connection, 4);
-    assertTrue(columnValue5 == 56780);
+    assertTrue(columnValue5 == -1234567890123L);
 
     assertEquals(101, // SQLite done
       SCCoreGlue.scc_step(connection)

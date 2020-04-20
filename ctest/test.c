@@ -272,7 +272,7 @@ static void test06() {
     );
 
   TEST_ASSERT_INT_EQUALS(0, // SQLite OK
-    scc_bind_double(connection_id, 1, 123.456)
+    scc_bind_double(connection_id, 1, 1234567.890123)
     );
 
   TEST_ASSERT_INT_EQUALS(0, // SQLite OK
@@ -297,7 +297,7 @@ static void test06() {
     );
 
   TEST_ASSERT_DOUBLE_EQUALS(
-    1234.56,
+    12345678.90123,
     scc_get_column_double(connection_id, 0)
     );
 
@@ -339,7 +339,7 @@ static void test07() {
     );
 
   TEST_ASSERT_INT_EQUALS(0, // SQLite OK
-    scc_bind_long(connection_id, 2, 567)
+    scc_bind_long(connection_id, 2, 1234567890123)
     );
 
   TEST_ASSERT_INT_EQUALS(100, // SQLite rows
@@ -374,7 +374,7 @@ static void test07() {
     );
 
   TEST_ASSERT_LONG_EQUALS(
-    -567,
+    -1234567890123,
     scc_get_column_double(connection_id, 1)
     );
 
