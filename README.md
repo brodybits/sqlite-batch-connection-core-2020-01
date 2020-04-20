@@ -435,13 +435,13 @@ first set in JSON string format (reformatted by `prettier-standard`):
   },
   { "status": 1, "message": "near \"SLCT\": syntax error" },
   { "status": 1, "message": "column index out of range" },
-  { "status": 0, "total_changes": 0, "last_insert_rowid": 0 },
-  { "status": 0, "total_changes": 0, "last_insert_rowid": 0 },
-  { "status": 0, "total_changes": 1, "last_insert_rowid": 1 },
+  { "status": 0, "rowsAffected": 0, "totalChanges": 0 },
+  { "status": 0, "rowsAffected": 0, "totalChanges": 0 },
+  { "status": 0, "totalChanges": 1, "rowsAffected": 1, "lastInsertRowId": 1 },
   { "status": 1, "message": "NOT NULL constraint failed: Testing.data" },
-  { "status": 0, "total_changes": 2, "last_insert_rowid": 1 },
-  { "status": 0, "total_changes": 3, "last_insert_rowid": 1 },
-  { "status": 0, "total_changes": 4, "last_insert_rowid": 2 },
+  { "status": 0, "totalChanges": 2, "rowsAffected": 1, "lastInsertRowId": 1 },
+  { "status": 0, "totalChanges": 3, "rowsAffected": 1, "lastInsertRowId": 1 },
+  { "status": 0, "totalChanges": 4, "rowsAffected": 1, "lastInsertRowId": 2 },
   {
     "status": 0,
     "columns": ["data"],
@@ -467,9 +467,9 @@ results from cache database file demo:
 
 ```json
 [
-  { "status": 0, "total_changes": 0, "last_insert_rowid": 0 },
-  { "status": 0, "total_changes": 0, "last_insert_rowid": 0 },
-  { "status": 0, "total_changes": 1, "last_insert_rowid": 1 },
+  { "status": 0, "rowsAffected": 0, "totalChanges": 0 },
+  { "status": 0, "rowsAffected": 0, "totalChanges": 0 },
+  { "status": 0, "totalChanges": 1, "rowsAffected": 1, "lastInsertRowId": 1 },
   { "status": 0, "columns": ["data"], "rows": [["test data"]] }
 ]
 ```
