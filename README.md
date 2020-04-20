@@ -57,7 +57,6 @@ with support available here: <https://github.com/brodybits/ask-me-anything/issue
 - The required `scc_init()` initialization function should be called from the main thread upon startup, is **NOT** thread-safe.
 - The `sqlite-connection-core.h` API header file and Java interface class have very limited documentation comments.
 - Formal documentation of the API is missing here.
-- The Cordova demo plugin defines multiple functions on the global `window` object, should export the functions through a single object instead.
 
 ## Samples
 
@@ -283,7 +282,7 @@ function openFileDatabaseConnection (name, openCallback, errorCallback) {
     function (path) {
       log('database file path: ' + path)
 
-      window.openDatabaseConnection(
+      window.sqliteBatchConnection.openDatabaseConnection(
         { path: path, flags: OPEN_DATABASE_FLAGS },
         openCallback,
         errorCallback
@@ -306,7 +305,7 @@ function openCacheFileDatabaseConnection (name, openCallback, errorCallback) {
 
       log('database cache file path: ' + path)
 
-      window.openDatabaseConnection(
+      window.sqliteBatchConnection.openDatabaseConnection(
         { path: path, flags: OPEN_DATABASE_FLAGS },
         openCallback,
         errorCallback
@@ -330,7 +329,7 @@ function openCallback (connectionId) {
   log('open connection id: ' + connectionId)
 
   // ERROR TEST - file name with incorrect flags:
-  window.openDatabaseConnection(
+  window.sqliteBatchConnection.openDatabaseConnection(
     { path: 'dummy.db', flags: 0 },
     function (_ignored) {
       log('FAILURE - unexpected open success callback received')
@@ -346,10 +345,11 @@ function openCallback (connectionId) {
 
 function batchDemo (connectionId) {
   log('starting batch demo for connection id: ' + connectionId)
-  window.executeBatch(
+  window.sqliteBatchConnection.executeBatch(
     connectionId,
     [
       ['SELECT ?, -?, LOWER(?), UPPER(?)', [null, 123.456789, 'ABC', 'Text']],
+      ['SELECT 10 * ?, -?', [1234567.890123, 1234567890123]],
       ['SLCT 1', []],
       ['SELECT ?', ['OK', 'out of bounds parameter']],
       ['DROP TABLE IF EXISTS Testing', []],
@@ -380,10 +380,14 @@ function startReaderDemo () {
     function (id) {
       log('read from another connection id: ' + id)
 
-      window.executeBatch(id, [['SELECT * FROM Testing', []]], function (res) {
-        log(JSON.stringify(res))
-        startCacheFileDemo()
-      })
+      window.sqliteBatchConnection.executeBatch(
+        id,
+        [['SELECT * FROM Testing', []]],
+        function (res) {
+          log(JSON.stringify(res))
+          startCacheFileDemo()
+        }
+      )
     },
     function (error) {
       log('UNEXPECTED OPEN ERROR: ' + error)
@@ -397,7 +401,7 @@ function startCacheFileDemo () {
     function (id) {
       log('cache file database connection id: ' + id)
 
-      window.executeBatch(
+      window.sqliteBatchConnection.executeBatch(
         id,
         [
           ['DROP TABLE IF EXISTS Testing', []],
