@@ -1,29 +1,21 @@
-package com.demo;
+package io.sqlc;
 
 import io.sqlc.SCCoreGlue;
 
-import org.apache.cordova.*;
-
 import org.json.*;
 
-public class SQLiteDemo extends CordovaPlugin {
-  @Override
-  public boolean execute(String method, JSONArray data, CallbackContext cbc) {
-    switch(method) {
-      case "openDatabaseConnection":
-        openDatabaseConnection(data, cbc);
-        break;
-      case "executeBatch":
-        executeBatch(data, cbc);
-        break;
-      default:
-        return false;
-    }
-    return true;
+public class SQLiteBatchCore {
+  public interface OpenCallbacks {
+    public void success(int connectionId);
+    public void error(String message);
   }
 
-  static private void
-  openDatabaseConnection(JSONArray args, CallbackContext cbc) {
+  public interface ExecuteBatchCallbacks {
+    public void success(JSONArray results);
+    public void error(String message);
+  }
+
+  static public void openDatabaseConnection(JSONArray args, OpenCallbacks cb) {
     try {
       final JSONObject options = args.getJSONObject(0);
 
@@ -34,17 +26,17 @@ public class SQLiteDemo extends CordovaPlugin {
       final int mydbc = SCCoreGlue.scc_open_connection(pathname, flags);
 
       if (mydbc < 0) {
-        cbc.error("open error: " + -mydbc);
+        cb.error("open error: " + -mydbc);
       } else {
-        cbc.success(mydbc);
+        cb.success(mydbc);
       }
     } catch(Exception e) {
       // NOT EXPECTED - internal error:
-      cbc.error(e.toString());
+      cb.error(e.toString());
     }
   }
 
-  static private void executeBatch(JSONArray args, CallbackContext cbc) {
+  static public void executeBatch(JSONArray args, ExecuteBatchCallbacks cb) {
     try {
       final int mydbc = args.getInt(0);
 
@@ -164,10 +156,10 @@ public class SQLiteDemo extends CordovaPlugin {
       }
 
       // send results to JavaScript side (...)
-      cbc.success(results);
+      cb.success(results);
     } catch(Exception e) {
       // NOT EXPECTED - internal error:
-      cbc.error(e.toString());
+      cb.error(e.toString());
     }
   }
 

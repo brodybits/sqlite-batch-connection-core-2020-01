@@ -34,8 +34,9 @@ with support available here: <https://github.com/brodybits/ask-me-anything/issue
 - `sqlite-connection-core.c` - main low-level C library source module
 - `ctest` - test of main low-level C library
 - `sccglue` - low-level Java API wrapper generated with help from GlueGen from jogamp.org, with JNI test
+- `object-batch-connection` - native classes for Android, iOS, and macOS which are intended to help provide plugin functionality for Cordova and possibly React Native
 - `cordova-demo` - extremely simple Cordova demo app for testing, reformatted by `prettier-standard`, includes Cordova demo plugin:
-  - `cordova-sqlite-demo-plugin` - extremely simple Cordova plugin that can open a SQLite database, execute a set of batch statements with parameters, and send the results to the Cordova JavaScript app
+  - `cordova-sqlite-demo-plugin` - extremely simple Cordova plugin that can open a SQLite database, execute a set of batch statements with parameters, and send the results to the Cordova JavaScript app, with help from native classes from `object-batch-connection`
 - with some other top-level Makefile artifacts included
 
 ## Major features
