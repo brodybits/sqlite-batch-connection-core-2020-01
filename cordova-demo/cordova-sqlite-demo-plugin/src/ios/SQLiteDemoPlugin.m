@@ -18,7 +18,7 @@
 
   NSDictionary * options = (NSDictionary *)[_args objectAtIndex: 0];
 
-  NSString * filename = (NSString *)[options valueForKey: @"path"];
+  NSString * filename = (NSString *)[options valueForKey: @"fullName"];
 
   const int flags = [(NSNumber *)[options valueForKey: @"flags"] intValue];
 
