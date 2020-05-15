@@ -72,7 +72,7 @@ void scc_init()
   is_initialized = true;
 }
 
-int scc_open_connection(const char * filename, int flags)
+int scc_open_connection(const char * full_name, int flags)
 {
   int connection_id = -1;
   sqlite3 * db = NULL;
@@ -91,7 +91,7 @@ int scc_open_connection(const char * filename, int flags)
   }
 
   if (connection_id != -1) {
-    open_result = sqlite3_open_v2(filename, &db, flags, NULL);
+    open_result = sqlite3_open_v2(full_name, &db, flags, NULL);
 
 #ifndef NO_SCC_DBCONFIG_DEFENSIVE
     // extra-safe ref:
