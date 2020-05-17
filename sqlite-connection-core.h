@@ -20,7 +20,7 @@ typedef long long scc_long_long;
  */
 void scc_init();
 
-int scc_open_connection(const char * filename, int flags);
+int scc_open_connection(const char * full_name, int flags);
 
 int scc_begin_statement(int connection_id, const char * statement);
 
