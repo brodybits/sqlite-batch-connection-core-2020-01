@@ -29,11 +29,11 @@ public class SQLiteDemoPlugin extends CordovaPlugin {
     try {
       final JSONObject options = args.getJSONObject(0);
 
-      final String pathname = options.getString("path");
+      final String fullName = options.getString("fullName");
 
       final int flags = options.getInt("flags");
 
-      SQLiteBatchCore.openBatchConnection(pathname, flags, new SQLiteBatchCore.OpenCallbacks() {
+      SQLiteBatchCore.openBatchConnection(fullName, flags, new SQLiteBatchCore.OpenCallbacks() {
         public void success(int connectionId) {
           cbc.success(connectionId);
         }
