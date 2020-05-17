@@ -34,8 +34,9 @@ with support available here: <https://github.com/brodybits/ask-me-anything/issue
 - `sqlite-connection-core.c` - main low-level C library source module
 - `ctest` - test of main low-level C library
 - `sccglue` - low-level Java API wrapper generated with help from GlueGen from jogamp.org, with JNI test
+- `object-batch-connection` - native classes for Android, iOS, and macOS which are intended to help provide plugin functionality for Cordova and possibly React Native
 - `cordova-demo` - extremely simple Cordova demo app for testing, reformatted by `prettier-standard`, includes Cordova demo plugin:
-  - `cordova-sqlite-demo-plugin` - extremely simple Cordova plugin that can open a SQLite database, execute a set of batch statements with parameters, and send the results to the Cordova JavaScript app
+  - `cordova-sqlite-demo-plugin` - extremely simple Cordova plugin that can open a SQLite database, execute a set of batch statements with parameters, and send the results to the Cordova JavaScript app, with help from native classes from `object-batch-connection`
 - with some other top-level Makefile artifacts included
 
 ## Major features
@@ -49,6 +50,7 @@ with support available here: <https://github.com/brodybits/ask-me-anything/issue
 ## Some known limitations
 
 - Not tested with `Infinity`, `-Infinity`, or `NaN` values.
+- 64-bit integer values are not supported by `object-batch-connection` as used by Cordova demo and intended to be used with React Native. The Cordova demo is tested with integer values up to 52-bits (signed).
 - In case of Apache Cordova, a helper plugin such as `cordova-sqlite-storage-file` (recommended) or `cordova-plugin-file` (recommended for external filesystem access on Android) should be used to resolve an absolute database file path before opening it. (Similar helper components would be recommended on React Native.)
 - not able to close database connection and release internal resources
 - hard limit of 1000 open SQLite database connections, which can be changed by defining `SCC_MAXIMUM_CONNECTIONS` to configure the hard limit when building
