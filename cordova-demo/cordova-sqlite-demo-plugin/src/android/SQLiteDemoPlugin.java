@@ -1,5 +1,8 @@
 package com.demo;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import io.sqlc.SQLiteBatchCore;
 
 import org.apache.cordova.CallbackContext;
@@ -52,6 +55,20 @@ public class SQLiteDemoPlugin extends CordovaPlugin {
 
       JSONArray data = args.getJSONArray(1);
 
+      threadPool.execute(new Runnable() {
+        public void run() {
+          executeBatchNow(mydbc, data, cbc);
+        }
+      });
+    } catch(Exception e) {
+      // NOT EXPECTED - internal error:
+      cbc.error(e.toString());
+    }
+  }
+
+  static private void
+  executeBatchNow(final int mydbc, JSONArray data, CallbackContext cbc) {
+    try {
       JSONArray results = SQLiteBatchCore.executeBatch(mydbc, data);
 
       cbc.success(results);
@@ -60,4 +77,12 @@ public class SQLiteDemoPlugin extends CordovaPlugin {
       cbc.error(e.toString());
     }
   }
+
+  static {
+    threadPool = Executors.newCachedThreadPool();
+  }
+
+  // This is really an instance of ExecutorService,
+  // but only execute from Executor is needed here.
+  static private Executor threadPool;
 }
