@@ -3,8 +3,6 @@ package com.demo;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import io.sqlc.SCCoreGlue;
-
 import io.sqlc.SQLiteBatchCore;
 
 import org.apache.cordova.CallbackContext;
@@ -252,6 +250,7 @@ public class SQLiteDemoPlugin extends CordovaPlugin {
 
       JSONArray data = args.getJSONArray(1);
 
+      // execute in background
       threadPool.execute(new Runnable() {
         public void run() {
           executeBatchNow(mydbc, data, cbc);
@@ -272,7 +271,6 @@ public class SQLiteDemoPlugin extends CordovaPlugin {
         new JSONBatchData(data),
         new JSONBatchResults(results));
 
-      // send results to JavaScript side (...)
       cbc.success(results);
     } catch(Exception e) {
       // NOT EXPECTED - internal error:
