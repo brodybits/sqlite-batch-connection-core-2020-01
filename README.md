@@ -206,7 +206,7 @@ class SQLiteDemo {
   }
 
   static {
-    System.loadLibrary("sqlite-connection-core-glue");
+    System.loadLibrary("sqlc-connection-core-glue");
     SCCoreGlue.scc_init();
   }
 }
